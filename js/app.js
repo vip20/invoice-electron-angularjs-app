@@ -24,7 +24,7 @@ app.constant('EMPTY_INVOICE',{
   tax: '20.00',
   date:'',
   amount:'0.00',
-  currencySymbol:'$',
+  currencySymbol:'₹ ',
   logo:'',
   customer: {
   	'name':'Mr. Mister',
