@@ -4,11 +4,16 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron main.js",
+    "pack": "build --dir"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/electron/electron-quick-start.git"
+  },
+  "build":{
+    "productName":"Invoice Apllication",
+    "appId": "a.b.c"
   },
   "keywords": [
     "Electron",
@@ -23,8 +28,7 @@
   },
   "homepage": "https://github.com/electron/electron-quick-start#readme",
   "devDependencies": {
-    "electron-prebuilt": "^1.2.0",
-    "nodemailer": "^2.4.2"
+    "electron-prebuilt": "^1.2.0"
   },
   "dependencies": {
     "electron-packager": "^7.1.0",

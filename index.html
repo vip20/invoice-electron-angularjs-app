@@ -47,7 +47,7 @@
         </tr>
         <tr>
           <th><span >Amount Due</span></th>
-          <td><span id="prefix" contenteditable="true" ng-model="invoice.currencySymbol" ng-attr-contenteditable="{{ editMode }}">$</span><span>{{ calculateTotal() - invoice.paid }}</span></td>
+          <td><span id="prefix" contenteditable="true" ng-model="invoice.currencySymbol" ng-attr-contenteditable="{{ editMode }}">₹ </span><span>{{ calculateTotal() - invoice.paid }}</span></td>
         </tr>
       </table>
       <table class="inventory">
@@ -64,9 +64,9 @@
           <tr ng-repeat="item in invoice.items">
             <td><a class="cut" ng-click="removeItem(item)">-</a><span contenteditable="true" ng-model="item.name">{{item.name}}</span></td>
             <td><span contenteditable="true" ng-model="item.description" ng-attr-contenteditable="{{ editMode }}">{{item.description}}</span></td>
-            <td><span data-prefix>$</span><span contenteditable="true" ng-model="item.rate" ng-attr-contenteditable="{{ editMode }}">{{item.rate}}</span></td>
+            <td><span data-prefix>₹ </span><span contenteditable="true" ng-model="item.rate" ng-attr-contenteditable="{{ editMode }}">{{item.rate}}</span></td>
             <td><span contenteditable="true" ng-model="item.quantity" ng-attr-contenteditable="{{ editMode }}">{{item.quantity}}</span></td>
-            <td><span data-prefix>$</span><span>{{ item.rate * item.quantity }}</span></td>
+            <td><span data-prefix>₹ </span><span>{{ item.rate * item.quantity }}</span></td>
           </tr>
         </tbody>
       </table>
@@ -74,7 +74,7 @@
       <table class="balance">
         <tr>
           <th><span >SubTotal</span></th>
-          <td><span data-prefix>$</span><span>{{ calculateSubTotal() }}</span></td>
+          <td><span data-prefix>₹ </span><span>{{ calculateSubTotal() }}</span></td>
         </tr>
         <tr>
           <th><span >Tax</span></th>
@@ -84,7 +84,7 @@
         </tr>
         <tr>
           <th><span>Amount Paid</span></th>
-          <td><span data-prefix>$</span><span contenteditable="true" ng-model="invoice.paid" ng-attr-contenteditable="{{ editMode }}">0.00</span></td>
+          <td><span data-prefix>₹ </span><span contenteditable="true" ng-model="invoice.paid" ng-attr-contenteditable="{{ editMode }}">0.00</span></td>
         </tr>
         <tr>
           <th><span >Balance Due</span></th>

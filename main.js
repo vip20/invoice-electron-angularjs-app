@@ -2,8 +2,8 @@ const electron = require('electron')
 const fs = require('fs')
 const os = require('os')
 const path = require('path')
-const nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
+// const nodemailer = require('nodemailer');
+// var smtpTransport = require('nodemailer-smtp-transport');
 const ipc = electron.ipcMain
 const shell = electron.shell
 
@@ -21,14 +21,14 @@ let menu;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 
-function setupEmailing(){
-    transport = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: '',
-        pass: ''
-      }
-    });
+// function setupEmailing(){
+//     transport = nodemailer.createTransport({
+//       service: 'gmail',
+//       auth: {
+//         user: '',
+//         pass: ''
+//       }
+//     });
   /*var transport = nodemailer.createTransport(smtpTransport({
    host: 'smtp.zoho.com',
    port: 587,
@@ -38,32 +38,32 @@ function setupEmailing(){
    }
   }));  */
 
-}
+//}
 
-function sendEmail(options){
-        const pdfPath = path.join(os.tmpdir(), 'print.pdf')
-        var options = options || {};
-        options.from = options.from || "support@techiediaries.com";
-        transport.sendMail({
-          from: options.from,
-          to: options.to,
-          subject: options.subject,
-          html: '',
-          text: options.text,  
-          attachments: [{
-              filename: 'invoice.pdf',
-              path: pdfPath,
-              contentType: 'application/pdf'
-          }]
-        }, function(err, responseStatus) {
-          console.log('email sent ');
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(responseStatus.message);
-          }
-        });  
-}
+// function sendEmail(options){
+//         const pdfPath = path.join(os.tmpdir(), 'print.pdf')
+//         var options = options || {};
+//         options.from = options.from || "support@techiediaries.com";
+//         transport.sendMail({
+//           from: options.from,
+//           to: options.to,
+//           subject: options.subject,
+//           html: '',
+//           text: options.text,  
+//           attachments: [{
+//               filename: 'invoice.pdf',
+//               path: pdfPath,
+//               contentType: 'application/pdf'
+//           }]
+//         }, function(err, responseStatus) {
+//           console.log('email sent ');
+//           if (err) {
+//             console.log(err);
+//           } else {
+//             console.log(responseStatus.message);
+//           }
+//         });  
+// }
 
 
 
@@ -95,7 +95,7 @@ function printPDF(){
       if (error) {
         throw error
       }
-      shell.openItem(pdfPath)
+      //shell.openItem(pdfPath)
       //event.sender.send('wrote-pdf', pdfPath)
       //createViewerWindow();
 
@@ -104,13 +104,13 @@ function printPDF(){
 }
 function enableMenuItems()
 {
-  menu.items[2].submenu.items[3].enabled = true;
-  menu.items[2].submenu.items[6].enabled = true;
+  //menu.items[2].submenu.items[1].enabled = true;
+  //menu.items[2].submenu.items[6].enabled = true;
       
 }
 function disbaleMenuItems(){
-  menu.items[2].submenu.items[3].enabled = false;
-  menu.items[2].submenu.items[6].enabled = false;
+  //menu.items[2].submenu.items[1].enabled = false;
+  //menu.items[2].submenu.items[6].enabled = false;
 
 }
 
@@ -121,9 +121,9 @@ let template = [
   {
     'label':'New Invoice ...',
     'click':function(){
-      //menu.items[2].submenu.items[3].enabled = true;
+      //menu.items[2].submenu.items[1].enabled = true;
       //menu.items[2].submenu.items[6].enabled = true;
-      menu.items[2].submenu.items[0].enabled = true;
+      //menu.items[2].submenu.items[0].enabled = true;
       disbaleMenuItems();
       mainWindow.loadURL(`file://${__dirname}/index.html`)
     }
@@ -181,32 +181,35 @@ let template = [
   label: 'Tools',
 
   submenu:[
-    {'label':'Generate PDF','enabled':false,click:function(){
+    {'label':'Generate PDF','enabled':false,
+    accelerator: 'CmdOrCtrl+P',click:function(){
       printPDF();
+      savePDF();
       enableMenuItems();
     }},
-    {
-    type: 'separator'
-    },
-    {
-      type: 'separator'
-    },
-    {'label':'Email..','enabled':false,click:function(){
+    // {
+    // type: 'separator'
+    // },
+    // {
+    //   type: 'separator'
+    // },
+    // {'label':'Email..','enabled':false,click:function(){
       
-      mainWindow.loadURL(`file://${__dirname}/emailer.html`);
+    //   mainWindow.loadURL(`file://${__dirname}/emailer.html`);
 
-      //sendEmail();
-    }},
-    {
-      type: 'separator'
-    },
-    {
-      type: 'separator'
-    },
-    {'label':'Save PDF As..','enabled':false,click:function(){
-      savePDF();
+    //   //sendEmail();
+    // }},
+    // {
+    //   type: 'separator'
+    // },
+    // {
+    //   type: 'separator'
+    // },
+    // {'label':'Save PDF As..','enabled':false,
+    // accelerator: 'CmdOrCtrl+P',click:function(){
+    //   savePDF();
 
-    }},
+    // }},
 
     
 
@@ -278,23 +281,23 @@ function createWindow () {
   var startTime = Date.now();
   mainWindow = new BrowserWindow({
     frame: true,
-    resizable: false,
+    resizable: true,
     width: 860,
     height: 600,
     show:false,
   });
    menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
-  setupEmailing();
+  //setupEmailing();
   ipc.on('start-invoicing', function (event) {
     menu.items[2].submenu.items[0].enabled = true;
 
     mainWindow.loadURL(`file://${__dirname}/index.html`);
   })
-  ipc.on('send-email', function (event,arg) {
-  console.log(arg);
-    sendEmail(arg);
-  })
+  // ipc.on('send-email', function (event,arg) {
+  // console.log(arg);
+  //   sendEmail(arg);
+  // })
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/splash.html`)
   mainWindow.webContents.on('did-finish-load', function() {
